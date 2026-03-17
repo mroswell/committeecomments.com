@@ -6,12 +6,13 @@ import time
 
 import os
 
-REGULATIONS_API_KEY = os.environ.get("REGULATIONS_API_KEY", "DEMO_KEY")
-
 # Constants
-DOCKET_ID = "FDA-2025-N-1146"
+DOCKET_ID = "CDC-2026-0199"
+# "FDA-2025-N-1146"
 BASE_URL = "https://api.regulations.gov/v4"
 # REGULATIONS_API_KEY = "DEMO_KEY"  # Replace with your actual API key
+REGULATIONS_API_KEY = os.environ.get("REGULATIONS_API_KEY", "DEMO_KEY")
+
 HEADERS = {"Accept": "application/json", "X-Api-Key": REGULATIONS_API_KEY}
 
 def get_documents(docket_id):
