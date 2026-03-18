@@ -1,4 +1,4 @@
-name: Fetch Regulations.gov Comments
+name: Fetch Regulations.gov Comments V2
 
 on:
   workflow_dispatch:
