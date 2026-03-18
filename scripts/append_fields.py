@@ -12,7 +12,7 @@ load_dotenv()
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV_PATH = os.path.join(REPO_ROOT, "data", "csv", "comments_CDC-2026-0199.csv")
 SAVE_EVERY = 20
-SLEEP_SECS = 1
+SLEEP_SECS = 3
 MODEL = "claude-sonnet-4-20250514"
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -157,27 +157,34 @@ Comment:
 {comment_text}"""
 
 
-def analyze_comment(comment_text):
+def analyze_comment(comment_text, max_retries=5):
     if not comment_text or pd.isna(comment_text):
         return {col: "" for col in ANALYSIS_COLUMNS}
-    try:
-        message = client.messages.create(
-            model=MODEL,
-            max_tokens=500,
-            messages=[{"role": "user", "content": build_prompt(comment_text)}]
-        )
-        raw = message.content[0].text.strip()
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-        result = json.loads(raw.strip())
-        if result.get("perspective") not in PERSPECTIVE_VALUES:
-            result["perspective"] = "uncertain"
-        return result
-    except Exception as e:
-        print(f"\n  Error analyzing comment: {e}")
-        return {col: "" for col in ANALYSIS_COLUMNS}
+    for attempt in range(max_retries):
+        try:
+            message = client.messages.create(
+                model=MODEL,
+                max_tokens=500,
+                messages=[{"role": "user", "content": build_prompt(comment_text)}]
+            )
+            raw = message.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            result = json.loads(raw.strip())
+            if result.get("perspective") not in PERSPECTIVE_VALUES:
+                result["perspective"] = "uncertain"
+            return result
+        except (anthropic.APIConnectionError, anthropic.RateLimitError) as e:
+            wait = 30 * (attempt + 1)
+            print(f"\n  {type(e).__name__}: waiting {wait}s (attempt {attempt+1}/{max_retries})")
+            time.sleep(wait)
+        except Exception as e:
+            print(f"\n  Error analyzing comment: {e}")
+            return {col: "" for col in ANALYSIS_COLUMNS}
+    print(f"\n  Gave up after {max_retries} retries")
+    return {col: "" for col in ANALYSIS_COLUMNS}
 
 
 if __name__ == "__main__":
