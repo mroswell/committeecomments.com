@@ -1,4 +1,4 @@
-name: Fetch Regulations.gov Comments V2
+name: Fetch Regulations.gov Comments v2
 
 on:
   workflow_dispatch:
@@ -43,6 +43,3 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-permissions:
-  contents: write
