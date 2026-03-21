@@ -2,18 +2,20 @@
 const PAGE_SIZE = 50;
 const DATA_URL = 'data/json/comments_CDC-2026-0199.json';
 const PERSPECTIVE_ORDER = [
-  'pro-vaccine',
-  'nuanced-mostly-pro',
+  'supportive',
+  'mostly-supportive',
   'uncertain',
   'vaccine-hesitant',
-  'anti-vaccine'
+  'mRNA-opposed',
+  'broadly-opposed'
 ];
 const PERSPECTIVE_LABELS = {
-  'pro-vaccine': 'Pro-vaccine',
-  'nuanced-mostly-pro': 'Nuanced mostly pro',
+  'supportive': 'Supportive',
+  'mostly-supportive': 'Mostly supportive',
   'uncertain': 'Uncertain',
   'vaccine-hesitant': 'Vaccine-hesitant',
-  'anti-vaccine': 'Anti-vaccine'
+  'mRNA-opposed': 'mRNA-opposed',
+  'broadly-opposed': 'Broadly opposed'
 };
 
 // === State ===
@@ -110,7 +112,6 @@ async function loadData() {
       includeScore: true
     });
 
-    // Compute tags and vaccines
     computeAllTags();
     computeAllVaccines();
     populateVaccineSelect();
@@ -268,7 +269,6 @@ function computeCounts(records) {
   let injured = 0, attachment = 0, org = 0;
   const tags = {};
   const vaccines = {};
-
   for (const r of records) {
     if (r.perspective) persp[r.perspective] = (persp[r.perspective] || 0) + 1;
     if (r.vaccine_injured) injured++;

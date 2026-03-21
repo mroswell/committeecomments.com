@@ -243,7 +243,6 @@ main {
   margin-top: 0.5rem;
 }
 .clear-btn:hover { background: #f0f0f0; }
-.dev-btn { color: #999; font-size: 0.75rem; border-style: dashed; }
 
 /* === Results Area === */
 #results { padding: 1rem 1.5rem; }
@@ -304,11 +303,12 @@ main {
   color: #fff;
   white-space: nowrap;
 }
-.perspective-pro-vaccine { background: #2171b5; }
-.perspective-nuanced-mostly-pro { background: #41ab5d; }
+.perspective-supportive { background: #2171b5; }
+.perspective-mostly-supportive { background: #41ab5d; }
 .perspective-uncertain { background: #969696; }
 .perspective-vaccine-hesitant { background: #e6850e; }
-.perspective-anti-vaccine { background: #cb181d; }
+.perspective-mRNA-opposed { background: #d45218; }
+.perspective-broadly-opposed { background: #cb181d; }
 
 /* Vaccine Injured Badge */
 .injured-badge {
