@@ -5,23 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About — Committee Comments</title>
   <link rel="stylesheet" href="style.css">
-  <script>
-    if (sessionStorage.getItem('cc-auth') !== 'ok') {
-      document.documentElement.classList.add('gated');
-    }
-  </script>
 </head>
 <body>
-  <div id="password-gate">
-    <div class="gate-box">
-      <h2>CommitteeComments.com</h2>
-      <p>Enter the password to continue.</p>
-      <input type="password" id="gate-password" placeholder="Password" autofocus>
-      <button id="gate-submit">Enter</button>
-      <p id="gate-error" hidden>Incorrect password.</p>
-    </div>
-  </div>
-
   <header>
     <div>
       <h1><a href="index.html">Committee Comments</a></h1>
@@ -135,6 +120,5 @@
       <a href="https://github.com/mroswell/committeecomments.com" target="_blank">GitHub</a>.</p>
     </article>
   </main>
-  <script src="gate.js"></script>
 </body>
 </html>
