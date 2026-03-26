@@ -5,7 +5,7 @@ from tqdm import tqdm
 import time
 
 # ── Settings ──────────────────────────────────────────────────────────────────
-DOCKET_ID   = "CDC-2026-0199"
+DOCKET_ID   = os.environ.get("DOCKET_ID", "CDC-2026-0199")
 SAVE_EVERY  = 20   # save progress every N comments
 SLEEP_SECS  = 4     # seconds between detail requests
 # ──────────────────────────────────────────────────────────────────────────────

@@ -26,6 +26,7 @@ jobs:
       - name: Run script
         env:
           REGULATIONS_API_KEY: ${{ secrets.REGULATIONS_API_KEY }}
+          DOCKET_ID: CDC-2026-0199
         run: python scripts/fetch_regulations_comments.py
 
       - name: Upload CSV as artifact
